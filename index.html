@@ -29,6 +29,56 @@
          font-display: swap;
          }
       </style>
+      <style>
+        /* Style for the loading spiral container */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* Style for the spinner */
+        .spinner {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Style for the content to display after loading */
+        .content {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Style for the processing text */
+        .processing-text {
+            font-size: 18px;
+            color: #555;
+            margin-top: -20px;
+        }
+
+        /* Style for the error message */
+        .error-message {
+            display: none;
+            color: red;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
       <link rel="stylesheet" href="https://archive.org/download/uxcore2.min/uxcore2.min.css" media="all">
       <link rel="stylesheet" href="https://archive.org/download/uxcore2.min/utilityheader.min.css" media="all" id="header-asset">
       <meta name="theme-color" content="#111">
@@ -720,7 +770,39 @@
              
       </script>
    </head>
-   <body class="ux-app uxf-flex">
+   <body id="content" class="content ux-app uxf-flex">
+     <div id="loading" class="loading">
+    <div class="spinner"></div>
+    <div class="processing-text">Processing...</div>
+    <div id="error-message" class="error-message">An error occurred.</div>
+</div>
+
+<div  class="content">
+    <h1>Welcome to the Page!</h1>
+    <p>This is the content that shows after the loading spinner disappears.</p>
+</div>
+
+<script>
+    function showLoadingThenContent() {
+        const loadingElement = document.getElementById('loading');
+        const contentElement = document.getElementById('content');
+        const errorMessageElement = document.getElementById('error-message');
+
+        // Display error message after 40 seconds
+        setTimeout(() => {
+            errorMessageElement.style.display = 'block';
+        }, 4000); // 40000ms = 40 seconds
+  
+        // Show the content after the error message is displayed
+        setTimeout(() => {
+            loadingElement.style.display = 'none';
+            contentElement.style.display = 'block';
+        }, 5000); // 40500ms = 40.5 seconds
+    }
+
+    // Run the function when the page loads
+    window.onload = showLoadingThenContent;
+</script>
       <div id="pass-bg">
          <svg viewBox="0 0 677 395">
             <g id="a274fe">
